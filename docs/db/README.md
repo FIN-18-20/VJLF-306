@@ -1,6 +1,7 @@
 ## To load data in the MySQL database
 
 
+:warning: Don't forget to change the **INFILE path** of the file in accordance with your **folder path**. :warning: 
 
 ```
 LOAD DATA
@@ -12,6 +13,7 @@ OPTIONALLY ENCLOSED BY ''
 LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (idConstructor, conName);
+
 LOAD DATA
 INFILE '<YOUR PATH>//VJLF-306//docs//db//suppliers.csv'
 INTO TABLE t_supplier
@@ -21,6 +23,7 @@ OPTIONALLY ENCLOSED BY ''
 LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (idSupplier, supName);
+
 LOAD DATA
 INFILE '<YOUR PATH>//VJLF-306//docs//db//consumables.csv'
 INTO TABLE t_consumables
@@ -30,6 +33,7 @@ OPTIONALLY ENCLOSED BY ''
 LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (idConsumable, csbName, csbDescription, csbPrice);
+
 LOAD DATA
 INFILE '<YOUR PATH>//VJLF-306//docs//db//brands.csv'
 INTO TABLE t_brands
@@ -48,6 +52,7 @@ OPTIONALLY ENCLOSED BY ''
 LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (idPrinter, priName, priWidth, priHeight, priLength, priWeight, priPrintSpeed, priScanRes, priSales, idBrands, idSupplier, idConsumable);
+
 LOAD DATA
 INFILE '<YOUR PATH>//VJLF-306//docs//db//prices.csv'
 INTO TABLE t_prices
