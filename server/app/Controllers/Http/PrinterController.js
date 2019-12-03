@@ -1,6 +1,7 @@
 'use strict'
 
 const Database = use('Database')
+const { validate } = use('Validator')
 
 class PrinterController {
   async test() {
@@ -23,6 +24,23 @@ class PrinterController {
       ORDER BY t_prices.priDate DESC, t_brands.braName
     `)
     return result[0]
+  }
+
+  async show({ response, params }) {
+    const validation = await validate(params.id, { id: 'integer' })
+    if (validation.fails()) return response.badRequest('Mauvaise requête')
+
+    const printerQuery = await Database.raw(`
+      SELECT t_printers.idPrinter, priName, priWidth, priHeight, priLength, priPrintSpeed, priScanRes, priSales, braName, conName, t_consumables.csbName, t_consumables.csbDescription, t_consumables.csbPrice from t_printers 
+      inner join t_brands on t_printers.idBrands = t_brands.idBrands 
+      inner join t_constructors on t_constructors.idConstructor = t_brands.idConstructor 
+      inner join t_consumables on t_printers.idConsumable = t_consumables.idConsumable 
+      where t_printers.idPrinter = ?`, [params.id])
+    const pricesQuery = await Database.raw(`SELECT idPrice, priDate, priValue FROM t_prices where t_prices.idPrinter = ?`, [params.id])
+
+    const result = { printer: printerQuery[0][0], prices: pricesQuery[0] }
+
+    return printerQuery[0].length > 0 ? response.ok(result) : response.notFound('Pas de résultat')
   }
 }
 
