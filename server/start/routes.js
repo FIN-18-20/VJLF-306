@@ -18,14 +18,7 @@ const Route = use('Route')
 
 Route.get('/', 'PrinterController.test') // test route
 
-Route.get('/brand', 'PrinterController.brand') // 1
-Route.get('/size-weight', 'PrinterController.size') // 2
-Route.get('/constructor', 'PrinterController.constructor') // 4
-Route.get('/sell', 'PrinterController.sell') // 5
-Route.get('/speed', 'PrinterController.speed') // 6
-Route.get('/resolution', 'PrinterController.resolution') // 7
-Route.get('/price', 'PrinterController.price') // 8
-Route.get('/constructor-price', 'PrinterController.constructorPrice') // 9
+Route.post('/filters', 'PrinterController.filters') // 1
 Route.get('/printers/:id', 'PrinterController.show') // 3, 10
 Route.get('/consumables', 'ConsumableController.index') // 11
 
