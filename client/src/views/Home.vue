@@ -44,7 +44,7 @@
         <table class="table-auto w-full mx-auto">
           <thead>
             <tr>
-              <th v-for="printer in displayKeys" :key="printer.Id" v-html="printer" class="px-4 py-2"></th>
+              <th v-for="printer in displayKeys" :key="printer.Id" v-html="printer" class="px-4 py-2 bg-blue-900 border-r border-blue-200 text-blue-100 font-semibold leading-none"></th>
             </tr>
           </thead>
           <tbody>
@@ -74,8 +74,8 @@ export default {
   data() {
     return {
       result: [],
-      firstFilter: '',
-      firstOrder: '',
+      firstFilter: 't_brands.braName',
+      firstOrder: 'ASC',
       limit: -1,
     }
   },

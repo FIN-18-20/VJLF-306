@@ -28,10 +28,10 @@ class PrinterController {
 
     const result = await Database.raw(`
       SELECT t_printers.idPrinter as 'show-Id', t_printers.priName as 'show-Nom', t_printers.priSales as 'show-Ventes', t_printers.priWeight as 'show-Poids<br>[kg]',
-      t_printers.priPrintSpeed as 'show-Vitesse <br>impression', t_printers.priScanRes as 'show-Resolution <br>numerisation',
+      t_printers.priPrintSpeed as 'show-Vitesse <br>impression [ppm]', t_printers.priScanRes as 'show-Résolution <br>numérisation [dpi]',
       t_brands.braName as 'show-Marque', t_brands.idConstructor,
       t_constructors.conName as 'show-Constructeur',
-      t_prices.priValue as 'show-Prix', t_prices.priDate
+      t_prices.priValue as 'show-Prix [chf]', t_prices.priDate
       FROM t_printers
       INNER JOIN t_brands ON t_brands.idBrands = t_printers.idBrands
       INNER JOIN t_constructors ON t_constructors.idConstructor = t_brands.idConstructor
