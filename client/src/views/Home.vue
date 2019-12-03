@@ -44,14 +44,21 @@
         <table class="table-auto w-full mx-auto">
           <thead>
             <tr>
-              <th v-for="printer in displayKeys" :key="printer.Id" v-html="printer" class="px-4 py-2 bg-blue-900 border-r border-blue-200 text-blue-100 font-semibold leading-none"></th>
+              <th
+                v-for="printer in displayKeys"
+                :key="printer.Id"
+                v-html="printer"
+                class="px-4 py-2 bg-blue-900 border-r border-blue-200 text-blue-100 font-semibold leading-none"
+              ></th>
             </tr>
           </thead>
           <tbody>
             <tr
               v-for="(printer, index) in result"
               :key="printer['show-Id']"
+              @click="goToPrinterDetails(printer['show-Id'])"
               :class="{'bg-gray-100': index % 2 === 0}"
+              class="cursor-pointer hover:bg-blue-100"
             >
               <td
                 v-for="key in displayKeys"
@@ -118,7 +125,6 @@ export default {
           data.limit = this.limit
 
         console.log(data)
-        // this.resetFilters()
         const result = await this.$axios(({ url: '/filters', data: data, method: 'POST' }))
         console.log(result.data)
         this.result = result.data
@@ -127,13 +133,8 @@ export default {
         console.log(error)
       }
     },
-    resetFilters() {
-        this.firstFilter = ''
-        this.firstOrder = ''
-        this.limit = -1
-    },
-    todo() {
-      alert('Bouton à implémenter.')
+    goToPrinterDetails(id) {
+      this.$router.push({ name: 'printers', params: { id: id } })
     }
   }
 }
