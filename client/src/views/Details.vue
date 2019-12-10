@@ -2,7 +2,7 @@
   <div class="details container mx-auto">
     <h1 class="text-5xl">Détails</h1>
     <div class="border-gray-600 border-double border-4 px-32 pt-4 pb-8">
-      <div class="text-4xl flex ml-48 pb-4">CANON PIXMA TS9550</div>
+      <div class="text-4xl flex ml-48 pb-4">{{ printer.priName }}</div>
       <div class="flex justify-between">
         <div
           class="bg-gray-200 rounded-lg shadow-lg text-gray-900 p-8 w-96"
@@ -10,39 +10,39 @@
           <div class="text-3xl pb-4">Caractéristiques</div>
           <div class="flex justify-between">
             <div class="font-bold self-center">Marque :</div>
-            <div class="pl-2 self-center">CANON</div>
+            <div class="pl-2 self-center">{{ printer.braName }}</div>
           </div>
           <div class="flex justify-between">
             <div class="font-bold self-center">Constructeur :</div>
-            <div class="pl-2 self-center">CANON</div>
+            <div class="pl-2 self-center">{{ printer.conName }}</div>
           </div>
           <div class="flex justify-between">
             <div class="font-bold self-center">Vitesse d'impression :</div>
-            <div class="pl-2">10 ppm</div>
+            <div class="pl-2">{{ printer.priPrintSpeed }} ppm</div>
           </div>
           <div class="flex justify-between">
             <div class="font-bold self-center">Résolution :</div>
-            <div class="pl-2">2400 dpi</div>
+            <div class="pl-2">{{ printer.priScanRes }} dpi</div>
           </div>
           <div class="flex justify-between">
             <div class="font-bold self-center">Largeur :</div>
-            <div class="pl-2 self-center">468 mm</div>
+            <div class="pl-2 self-center">{{ printer.priWidth }} mm</div>
           </div>
           <div class="flex justify-between">
             <div class="font-bold self-center">Hauteur :</div>
-            <div class="pl-2">193 mm</div>
+            <div class="pl-2">{{ printer.priHeight }} mm</div>
           </div>
           <div class="flex justify-between">
             <div class="font-bold self-center">Profondeur :</div>
-            <div class="pl-2">366 mm</div>
+            <div class="pl-2">{{ printer.priLength }} mm</div>
           </div>
           <div class="flex justify-between">
             <div class="font-bold self-center">Volume :</div>
-            <div class="pl-2">33.05 dm³</div>
+            <div class="pl-2">{{ printer.priLength * printer.priHeight * printer.priWidth / 1000000 }} dm³</div>
           </div>
           <div class="flex justify-between">
             <div class="font-bold self-center">Poids :</div>
-            <div class="pl-2">9.7 kg</div>
+            <div class="pl-2">{{ printer.priWeight }} kg</div>
           </div>
         </div>
         <div class="">
@@ -51,11 +51,11 @@
           >
             <div class="flex justify-between">
               <div class="font-bold self-center text-3xl">Prix :</div>
-              <div class="pl-2 text-3xl">181 CHF</div>
+              <div class="pl-2 text-3xl">{{ prices[4].priValue }}</div>
             </div>
             <div class="pt-4 flex justify-between">
               <div class="font-bold self-center">Nombre de ventes :</div>
-              <div class="pl-2">253</div>
+              <div class="pl-2">{{ printer.priSales }}</div>
             </div>
           </div>
           <div
@@ -64,15 +64,15 @@
             <div class="text-3xl pb-4">Consomables</div>
             <div class="flex justify-between">
               <div class="font-bold self-center">Nom :</div>
-              <div class="pl-2">CANON CLI-581PB</div>
+              <div class="pl-2">{{ printer.csbName }}</div>
             </div>
             <div class="flex justify-between">
               <div class="font-bold self-center">Description :</div>
-              <div class="pl-2">Encre bleue</div>
+              <div class="pl-2">{{ printer.csbDescription }}</div>
             </div>
             <div class="flex justify-between">
               <div class="font-bold self-center">Prix :</div>
-              <div class="pl-2">12 CHF/Cartouche</div>
+              <div class="pl-2">{{ printer.csbPrice }} CHF/Cartouche</div>
             </div>
           </div>
         </div>
