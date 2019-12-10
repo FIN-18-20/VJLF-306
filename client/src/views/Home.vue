@@ -2,7 +2,9 @@
   <div class="home container mx-auto">
     <div class="PrintersNav">
       <!-- FIRST FILTER -->
-      <div class="mx-auto max-w-2xl flex items-center justify-center py-2 rounded bg-blue-100 border border-blue-200">
+      <div
+        class="mx-auto max-w-2xl flex items-center justify-center py-2 rounded bg-blue-100 border border-blue-200"
+      >
         <div class="text-sm text-gray-900 font-semibold">Trier par :</div>
         <label class="ml-2 block">
           <select v-model="firstFilter" class="form-select block w-full mt-1">
@@ -50,7 +52,9 @@
         </label>
       </div>
       <!-- LIMIT AND BUTTON -->
-      <div class="mt-2 mx-auto max-w-md flex items-center justify-center py-2 rounded bg-blue-100 border border-blue-200">
+      <div
+        class="mt-2 mx-auto max-w-md flex items-center justify-center py-2 rounded bg-blue-100 border border-blue-200"
+      >
         <div class="text-sm text-gray-900 font-semibold">Limite de résultats :</div>
         <label class="ml-2 block">
           <select v-model="limit" class="form-select block w-full mt-1">
@@ -66,9 +70,8 @@
         >Filtrer</button>
       </div>
     </div>
-    <div
-      class="PrintersInfo mt-24 px-16 py-8 mx-auto border-gray-600 border-double border-8 text-center"
-    >
+    <!-- DISPLAY RESULTS -->
+    <div class="mt-24 px-16 py-8 mx-auto border-gray-600 border-double border-8 text-center">
       <div v-show="result.length">
         <table class="table-auto w-full mx-auto">
           <thead>
@@ -135,6 +138,14 @@ export default {
     }
   },
 
+  watch: {
+    secondFilter() {
+      if (!this.secondOrder.length) {
+        this.secondOrder = 'ASC'
+      }
+    }
+  },
+
   methods: {
     async callAPI(url) {
       try {
@@ -154,11 +165,10 @@ export default {
         }
         if (this.limit !== -1)
           data.limit = this.limit
-        
-        if(this.secondFilter) {
-            console.log('SECOND FILTER', this.secondOrder.length)
-            data.secondFilter = this.secondFilter
-            data.secondOrder = this.secondOrder.length ? this.secondOrder : 'ASC'
+
+        if (this.secondFilter) {
+          data.secondFilter = this.secondFilter
+          data.secondOrder = this.secondOrder.length ? this.secondOrder : 'ASC'
         }
 
         console.log(data)
