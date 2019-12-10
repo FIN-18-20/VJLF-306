@@ -13,16 +13,31 @@ class PrinterController {
   async filters({ request, response }) {
     const firstFilter = request.input('firstFilter')
     const firstOrder = request.input('firstOrder')
+    const secondFilter = request.input('secondFilter')
+    const secondOrder = request.input('secondOrder')
     const limit = request.input('limit')
 
     console.log(firstFilter, firstOrder, limit)
 
-    if (firstOrder !== 'ASC' && firstOrder !== 'DESC') {
+    const authorizedOrder = ['ASC', 'DESC']
+
+    if (!authorizedOrder.includes(firstOrder)) {
       return response.json(null)
     }
 
-    const parameters = { filter: firstFilter, order: firstOrder }
+    const parameters = { firstFilter }
     limit ? parameters.limit = limit : parameters.limit = 30
+
+    // Second filter
+    let secondFilterString = ''
+    if (secondFilter) {
+      console.log('IN SECOND FILTER')
+      if (!authorizedOrder.includes(secondOrder)) {
+        return response.json(null)
+      }
+      parameters.secondFilter = secondFilter
+      secondFilterString = `, :secondFilter: ${secondOrder}`
+    }
 
     console.log(parameters)
 
@@ -41,7 +56,7 @@ class PrinterController {
           SELECT MAX(t_prices.idPrice) FROM t_prices
           GROUP BY t_prices.idPrinter
       )
-      ORDER BY :filter: ${firstOrder}
+      ORDER BY :firstFilter: ${firstOrder}${secondFilterString}, t_printers.priName ASC
       LIMIT :limit
     `, parameters)
     return response.json(result[0])
