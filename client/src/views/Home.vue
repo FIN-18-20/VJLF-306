@@ -7,7 +7,7 @@
           <select v-model="firstFilter" class="form-select block w-full mt-1">
             <option value="t_brands.braName">Marque</option>
             <option value="t_constructors.conName">Constructeur</option>
-            <option>[TODO] Taille</option>
+            <option value="show-Taille [dm³]">Taille</option>
             <option value="t_printers.priWeight">Poids</option>
             <option value="t_printers.priSales">Ventes</option>
             <option value="t_printers.priPrintSpeed">Vitesse d'impression</option>
