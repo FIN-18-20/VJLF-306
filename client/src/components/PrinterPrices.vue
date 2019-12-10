@@ -1,23 +1,23 @@
 <template>
-  <div>
-    Graph Component here
-    <div class="PricessInfo container mt-24 px-16 py-8 mx-auto border-gray-600 border-double border-8 text-center">
-      <h3 class="text-xl font-bold">Différents prix:</h3>
-      <table class="table-auto w-full mx-auto mt-2">
+  <div class="my-16">
+    <div class="PricesInfo inline-block  px-8 py-4 mx-auto border-gray-600 border-double border-4 text-center">
+      <h3 class="text-xl font-bold inline-block">Différents prix:</h3>
+      <table class="table-auto w-48 mx-auto mt-3">
         <thead>
           <tr>
-            <th class="border">Date</th>
-            <th class="border">Valeur</th>
+            <th class="bg-gray-200 border">Date</th>
+            <th class="bg-gray-200 border">Valeur [CHF]</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(price, index) in prices" :key="price.idPrice">
-            <td :class="{'bg-gray-100': index % 2 === 0}" class="border px-4 py-2">{{ price.priDate }}</td>
+            <td :class="{'bg-gray-100': index % 2 === 0}" class="border px-4 py-2">{{ formatDate(price.priDate) }}</td>
             <td class="border px-4 py-2">{{ price.priValue }}</td>
           </tr>
         </tbody>
       </table>
     </div>
+    Graph Component here
   </div>
 </template>
 
@@ -25,6 +25,12 @@
 export default {
   props: {
     prices: { type: Array, required: true }
-  }
+  },
+  methods: {
+    formatDate(dateToParse) {
+      const date = new Date(dateToParse)
+      return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'numeric', year: '2-digit' })
+    }
+  },
 }
 </script>
