@@ -8,14 +8,7 @@
         <div class="text-sm text-gray-900 font-semibold">Trier par :</div>
         <label class="ml-2 block">
           <select v-model="firstFilter" class="form-select block w-full mt-1">
-            <option value="t_brands.braName">Marque</option>
-            <option value="t_constructors.conName">Constructeur</option>
-            <option value="show-Taille [dm³]">Taille</option>
-            <option value="t_printers.priWeight">Poids</option>
-            <option value="t_printers.priSales">Ventes</option>
-            <option value="t_printers.priPrintSpeed">Vitesse d'impression</option>
-            <option value="t_prices.priValue">Prix</option>
-            <option value="t_printers.priScanRes">Résolution de numérisation</option>
+            <option v-for="(name, f) in filters" :key="'firstFilter-' + name" :value="f">{{ name }}</option>
           </select>
         </label>
         <div class="ml-8 text-sm text-gray-900 font-semibold">Ordre :</div>
@@ -33,14 +26,11 @@
         <div class="text-sm text-gray-900 font-semibold">Second filtre (optionnel) :</div>
         <label class="ml-2 block">
           <select v-model="secondFilter" class="form-select block w-full mt-1">
-            <option value="t_brands.braName">Marque</option>
-            <option value="t_constructors.conName">Constructeur</option>
-            <option value="show-Taille [dm³]">Taille</option>
-            <option value="t_printers.priWeight">Poids</option>
-            <option value="t_printers.priSales">Ventes</option>
-            <option value="t_printers.priPrintSpeed">Vitesse d'impression</option>
-            <option value="t_prices.priValue">Prix</option>
-            <option value="t_printers.priScanRes">Résolution de numérisation</option>
+            <option
+              v-for="(name, f) in filtersSecond"
+              :key="'secondFilter-' + name"
+              :value="f"
+            >{{ name }}</option>
           </select>
         </label>
         <div class="ml-8 text-sm text-gray-900 font-semibold">Ordre :</div>
@@ -118,6 +108,16 @@ export default {
       limit: -1,
       secondFilter: '',
       secondOrder: '',
+      filters: {
+        't_brands.braName': 'Marque',
+        't_constructors.conName': 'Constructeur',
+        'show-Taille [dm³]': 'Taille',
+        't_printers.priWeight': 'Poids',
+        't_printers.priSales': 'Ventes',
+        't_printers.priPrintSpeed': 'Vitesse d\'impression',
+        't_prices.priValue': 'Prix',
+        't_printers.priScanRes': 'Résolution de numérisation',
+      }
     }
   },
 
@@ -135,6 +135,12 @@ export default {
             key.split('show-')[1]
           ]
         }, [])
+    },
+
+    filtersSecond() {
+      const newFilters = { ...this.filters }
+      delete newFilters[this.firstFilter]
+      return newFilters
     }
   },
 
