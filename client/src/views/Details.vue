@@ -38,7 +38,7 @@
           </div>
           <div class="flex justify-between">
             <div class="font-bold self-center">Volume :</div>
-            <div class="pl-2">{{ printer.priLength * printer.priHeight * printer.priWidth / 1000000 }} dm³</div>
+            <div class="pl-2">{{ (printer.priLength * printer.priHeight * printer.priWidth / 1000000).toFixed(2) }} dm³</div>
           </div>
           <div class="flex justify-between">
             <div class="font-bold self-center">Poids :</div>
@@ -51,7 +51,7 @@
           >
             <div class="flex justify-between">
               <div class="font-bold self-center text-3xl">Prix :</div>
-              <div class="pl-2 text-3xl">{{ prices[4].priValue }}</div>
+              <div class="pl-2 text-3xl">{{ prices[4].priValue }} CHF</div>
             </div>
             <div class="pt-4 flex justify-between">
               <div class="font-bold self-center">Nombre de ventes :</div>
