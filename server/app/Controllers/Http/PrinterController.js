@@ -17,11 +17,11 @@ class PrinterController {
 
     console.log(firstFilter, firstOrder, limit)
 
-    if(firstOrder !== 'ASC' && firstOrder !== 'DESC') {
-        return response.json(null)
+    if (firstOrder !== 'ASC' && firstOrder !== 'DESC') {
+      return response.json(null)
     }
 
-    const parameters = {filter: firstFilter, order: firstOrder}
+    const parameters = { filter: firstFilter, order: firstOrder }
     limit ? parameters.limit = limit : parameters.limit = 30
 
     console.log(parameters)
@@ -52,7 +52,7 @@ class PrinterController {
     if (validation.fails()) return response.badRequest('Mauvaise requête')
 
     const printerQuery = await Database.raw(`
-      SELECT t_printers.idPrinter, priName, priWidth, priHeight, priLength, priPrintSpeed, priScanRes, priSales, braName, conName, t_consumables.csbName, t_consumables.csbDescription, t_consumables.csbPrice from t_printers 
+      SELECT t_printers.idPrinter, priName, priWidth, priHeight, priLength, priWeight, priPrintSpeed, priScanRes, priSales, braName, conName, t_consumables.csbName, t_consumables.csbDescription, t_consumables.csbPrice from t_printers 
       inner join t_brands on t_printers.idBrands = t_brands.idBrands 
       inner join t_constructors on t_constructors.idConstructor = t_brands.idConstructor 
       inner join t_consumables on t_printers.idConsumable = t_consumables.idConsumable 

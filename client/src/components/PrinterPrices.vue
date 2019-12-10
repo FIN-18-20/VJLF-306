@@ -1,5 +1,5 @@
 <template>
-  <div class="my-16">
+  <div>
     <div class="PricesInfo inline-block  px-8 py-4 mx-auto border-gray-600 border-double border-4 text-center">
       <h3 class="text-xl font-bold inline-block">Différents prix:</h3>
       <table class="table-auto w-48 mx-auto mt-3">
@@ -17,7 +17,6 @@
         </tbody>
       </table>
     </div>
-    Graph Component here
   </div>
 </template>
 

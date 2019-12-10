@@ -78,15 +78,22 @@
         </div>
       </div>
     </div>
-    <printer-prices :prices="prices"></printer-prices>
+    <div class="flex my-16">
+      <printer-prices :prices="prices"></printer-prices>
+      <printer-prices-graph :prices="prices"></printer-prices-graph>
+    </div>
+    
   </div>
 </template>
 
 <script>
 import PrinterPrices from '../components/PrinterPrices.vue'
+import PrinterPricesGraph from '../components/PrinterPricesGraph.vue'
+
 export default {
   components: {
-    PrinterPrices
+    PrinterPrices,
+    PrinterPricesGraph
   },
   data() {
     return {
