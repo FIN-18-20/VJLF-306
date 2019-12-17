@@ -6,8 +6,26 @@ class ConsumableController {
     async index({ request, response })
     {
         const result = await Database.raw('SELECT * FROM t_consumables');
-        console.log(result);
-        return response.json(result);
+        
+        let data = [];
+
+        for (const cons of result[0]) {
+            let element = [];
+            element.push(cons);
+            const printers = await Database.raw(`SELECT idPrinter, priName, braName, priValue
+                FROM t_printers 
+                NATURAL JOIN t_consumables NATURAL JOIN t_brands NATURAL JOIN t_prices 
+                WHERE idConsumable = ` + cons.idConsumable + ` 
+                GROUP BY idPrinter 
+                ORDER BY priDate`);
+            
+            element.push(printers[0]);
+            data.push(element);
+        console.log(printers[0]);
+        }
+
+
+        return response.json(data);
     }
 }
 
