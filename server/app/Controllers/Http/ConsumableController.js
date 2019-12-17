@@ -21,7 +21,6 @@ class ConsumableController {
             
             element.push(printers[0]);
             data.push(element);
-        console.log(printers[0]);
         }
 
         return response.json(data);
