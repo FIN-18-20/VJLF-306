@@ -17,7 +17,7 @@ class ConsumableController {
                 NATURAL JOIN t_consumables NATURAL JOIN t_brands NATURAL JOIN t_prices 
                 WHERE idConsumable = ` + cons.idConsumable + ` 
                 GROUP BY idPrinter 
-                ORDER BY priDate`);
+                ORDER BY priValue`);
             
             element.push(printers[0]);
             data.push(element);
