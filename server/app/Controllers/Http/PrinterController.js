@@ -42,8 +42,8 @@ class PrinterController {
     console.log(parameters)
 
     const result = await Database.raw(`
-      SELECT t_printers.idPrinter as 'show-Id', t_printers.priName as 'show-Nom', t_printers.priSales as 'show-Ventes', t_printers.priWeight as 'show-Poids<br>[kg]',
-      t_printers.priPrintSpeed as 'show-Vitesse <br>impression [ppm]', t_printers.priScanRes as 'show-Résolution <br>numérisation [dpi]',
+      SELECT t_printers.idPrinter as 'show-Id', t_printers.priName as 'show-Nom', t_printers.priSales as 'show-Ventes', t_printers.priWeight as 'show-Poids <br>[kg]',
+      t_printers.priPrintSpeed as 'show-Vitesse <br>impression [ppm]', t_printers.priScanRes as 'show-Résolution <br>de numérisation [dpi]',
       ROUND(t_printers.priWidth * t_printers.priHeight * t_printers.priLength / 1000000, 2) as 'show-Taille [dm³]',
       t_brands.braName as 'show-Marque', t_brands.idConstructor,
       t_constructors.conName as 'show-Constructeur',

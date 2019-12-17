@@ -67,9 +67,10 @@
           <thead>
             <tr>
               <th
-                v-for="printer in displayKeys"
-                :key="printer.Id"
+                v-for="(printer, index) in displayKeys"
+                :key="index + 'heading'"
                 v-html="printer"
+                :class="sortedByStyle(printer)"
                 class="px-4 py-2 bg-blue-900 border-r border-blue-200 text-blue-100 font-semibold leading-none"
               ></th>
             </tr>
@@ -117,7 +118,8 @@ export default {
         't_printers.priPrintSpeed': 'Vitesse d\'impression',
         't_prices.priValue': 'Prix',
         't_printers.priScanRes': 'Résolution de numérisation',
-      }
+      },
+      filtersChanged: false,
     }
   },
 
@@ -145,24 +147,24 @@ export default {
   },
 
   watch: {
+    firstFilter() {
+      this.filtersChanged = true
+    },
+
     secondFilter() {
       if (!this.secondOrder.length) {
         this.secondOrder = 'ASC'
       }
+
+      this.filtersChanged = true
     }
   },
 
+  created() {
+    this.filter()
+  },
+
   methods: {
-    async callAPI(url) {
-      try {
-        const result = await this.$axios(({ url: url, method: 'POST' }))
-        console.log(result.data)
-        this.result = result.data
-        console.log(this.displayKeys)
-      } catch (error) {
-        console.log(error)
-      }
-    },
     async filter() {
       try {
         const data = {
@@ -176,22 +178,32 @@ export default {
           data.secondFilter = this.secondFilter
           data.secondOrder = this.secondOrder.length ? this.secondOrder : 'ASC'
         }
-
-        console.log(data)
         const result = await this.$axios(({ url: '/filters', data: data, method: 'POST' }))
-        console.log(result.data)
         this.result = result.data
-        console.log(this.displayKeys)
+        this.filtersChanged = false
       } catch (error) {
         console.log(error)
       }
     },
     goToPrinterDetails(id) {
       this.$router.push({ name: 'printers', params: { id: id } })
+    },
+    sortedByStyle(key) {
+      if (this.filtersChanged) return
+
+      if (this.filters[this.firstFilter].includes(key.split(' ')[0]) ||
+        (this.secondFilter.length && this.filters[this.secondFilter].includes(key.split(' ')[0]))) {
+        return 'sorted relative text-blue-300'
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+.sorted::after {
+  content: "↓";
+  position: absolute;
+  right: 6px;
+}
 </style>
