@@ -43,7 +43,7 @@ Positionnez-vous à l'emplacement souhaité pour cloner le projet sur votre ordi
 
 La configuration de base du fichier **.env** devrait suffire à établir la connexion à la base de données.
 
-Cependant, si vous voulez changer les valeurs par défaut, vous pouvez modifier les valeurs **DB_DATABASE** (pour le nom de la base de données), **DB_USER** et **DB_PASSWORD** (pour le nom / mot de passe de l'utilisateur).
+Cependant, si vous voulez changer les valeurs par défaut, vous pouvez modifier les valeurs **DB_DATABASE** (pour le nom de la base de données), **DB_USER** et **DB_PASSWORD** (pour le nom et mot de passe de l'utilisateur).
 
 ### Lancer l'application
 Pour lancer l'application, il vous faut 2 consoles ouvertes simultanément, une pour la partie frontend de l'application et l'autre pour le serveur.
@@ -58,6 +58,7 @@ Pour lancer l'application, il vous faut 2 consoles ouvertes simultanément, une 
 ```
 
 L'application est ensuite accessible à l'adresse suivante: [localhost:8080](http://localhost:8080/)
+
 L'api du serveur est accessible à l'adresse suivante: [localhost:3333](http://localhost:3333/)
 
 Pour vérifier si la connexion du serveur à la base de donnée s'est établie avec succès, vous pouvez accéder à l'endpoint de test sur ce lien : [localhost:3333/test](http://localhost:3333/test) qui vous retourne un JSON avec une liste d'imprimantes.
