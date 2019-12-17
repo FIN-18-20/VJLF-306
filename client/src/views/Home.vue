@@ -143,11 +143,15 @@ export default {
       const newFilters = { ...this.filters }
       delete newFilters[this.firstFilter]
       return newFilters
+    },
+
+    oneFilterChanged() {
+      return `${this.firstFilter}${this.firstOrder}${this.secondFilter}${this.secondOrder}`
     }
   },
 
   watch: {
-    firstFilter() {
+    oneFilterChanged() {
       this.filtersChanged = true
     },
 
@@ -155,8 +159,6 @@ export default {
       if (!this.secondOrder.length) {
         this.secondOrder = 'ASC'
       }
-
-      this.filtersChanged = true
     }
   },
 
@@ -191,9 +193,16 @@ export default {
     sortedByStyle(key) {
       if (this.filtersChanged) return
 
-      if (this.filters[this.firstFilter].includes(key.split(' ')[0]) ||
-        (this.secondFilter.length && this.filters[this.secondFilter].includes(key.split(' ')[0]))) {
-        return 'sorted relative text-blue-300'
+      let classes = 'sorted relative text-blue-300'
+
+      if (this.filters[this.firstFilter].includes(key.split(' ')[0])) {
+        classes += this.firstOrder === 'ASC' ? ' sorted-up' : ' sorted-down'
+        return classes
+      }
+
+      if (this.secondFilter.length && this.filters[this.secondFilter].includes(key.split(' ')[0])) {
+        classes += this.secondOrder === 'ASC' ? ' sorted-up' : ' sorted-down'
+        return classes
       }
     }
   }
@@ -202,8 +211,17 @@ export default {
 
 <style scoped>
 .sorted::after {
-  content: "↓";
   position: absolute;
   right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.sorted-up::after {
+  content: "↑";
+}
+
+.sorted-down::after {
+  content: "↓";
 }
 </style>
