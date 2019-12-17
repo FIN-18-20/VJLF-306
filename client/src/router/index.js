@@ -14,6 +14,11 @@ const routes = [
     path: '/printers/:id',
     name: 'printers',
     component: () => import(/* webpackChunkName: "details" */ '../views/Details.vue')
+  },
+  {
+    path: '/consumables',
+    name: 'consumables',
+    component: () => import(/* webpackChunkName: "details" */ '../views/Consumables.vue')
   }
 ]
 
