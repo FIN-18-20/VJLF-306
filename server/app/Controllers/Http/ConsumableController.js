@@ -24,7 +24,6 @@ class ConsumableController {
         console.log(printers[0]);
         }
 
-
         return response.json(data);
     }
 }
