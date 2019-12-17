@@ -1,7 +1,8 @@
-## To load data in the MySQL database
+## Utilisation du Load Data et des fichiers csv
 
+Pour charger les données des fichiers csv fournis dans le repository, copiez et exécutez la query ci-dessous. 
 
-:warning: Don't forget to change the **INFILE path** of the file in accordance with your **folder path**. :warning: 
+:warning: Attention ! N'oubliez pas de remplacer **\<YOUR PATH>** par le chemin de votre dossier.
 
 ```
 LOAD DATA
