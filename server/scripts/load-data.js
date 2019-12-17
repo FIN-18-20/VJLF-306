@@ -5,66 +5,77 @@ const dotenv = require('dotenv').config({path: envPath});
 
 let csvPath = __dirname;
 
-csvPath = path.join(csvPath, '../../docs/db');
+csvPath = path.join(csvPath, '../../docs/db').replace(/\\/g, '/');
 
-let sqlQuery = "LOAD DATA\n" +
-  "INFILE '" + csvPath + "/constructors.csv'\n" +
-  "INTO TABLE t_constructors\n" +
-  "CHARACTER SET \"utf8\"\n" +
-  "COLUMNS TERMINATED BY ';'\n" +
-  "OPTIONALLY ENCLOSED BY ''\n" +
-  "LINES TERMINATED BY '\\r\\n'\n" +
-  "IGNORE 1 LINES\n" +
-  "(idConstructor, conName);\n" +
-  "\n" +
-  "LOAD DATA\n" +
-  "INFILE '" + csvPath + "/suppliers.csv'\n" +
-  "INTO TABLE t_supplier\n" +
-  "CHARACTER SET \"utf8\"\n" +
-  "COLUMNS TERMINATED BY ';'\n" +
-  "OPTIONALLY ENCLOSED BY ''\n" +
-  "LINES TERMINATED BY '\\r\\n'\n" +
-  "IGNORE 1 LINES\n" +
-  "(idSupplier, supName);\n" +
-  "\n" +
-  "LOAD DATA\n" +
-  "INFILE '" + csvPath + "/consumables.csv'\n" +
-  "INTO TABLE t_consumables\n" +
-  "CHARACTER SET \"utf8\"\n" +
-  "COLUMNS TERMINATED BY ';'\n" +
-  "OPTIONALLY ENCLOSED BY ''\n" +
-  "LINES TERMINATED BY '\\r\\n'\n" +
-  "IGNORE 1 LINES\n" +
-  "(idConsumable, csbName, csbDescription, csbPrice);\n" +
-  "\n" +
-  "LOAD DATA\n" +
-  "INFILE '" + csvPath + "/brands.csv'\n" +
-  "INTO TABLE t_brands\n" +
-  "CHARACTER SET \"utf8\"\n" +
-  "COLUMNS TERMINATED BY ';'\n" +
-  "OPTIONALLY ENCLOSED BY ''\n" +
-  "LINES TERMINATED BY '\\r\\n'\n" +
-  "IGNORE 1 LINES\n" +
-  "(idBrands, braName, idConstructor);\n" +
-  "LOAD DATA\n" +
-  "INFILE '" + csvPath + "/printers.csv'\n" +
-  "INTO TABLE t_printers\n" +
-  "CHARACTER SET \"utf8\"\n" +
-  "COLUMNS TERMINATED BY ';'\n" +
-  "OPTIONALLY ENCLOSED BY ''\n" +
-  "LINES TERMINATED BY '\\r\\n'\n" +
-  "IGNORE 1 LINES\n" +
-  "(idPrinter, priName, priWidth, priHeight, priLength, priWeight, priPrintSpeed, priScanRes, priSales, idBrands, idSupplier, idConsumable);\n" +
-  "\n" +
-  "LOAD DATA\n" +
-  "INFILE '" + csvPath + "/prices.csv'\n" +
-  "INTO TABLE t_prices\n" +
-  "CHARACTER SET \"utf8\"\n" +
-  "COLUMNS TERMINATED BY ';'\n" +
-  "OPTIONALLY ENCLOSED BY ''\n" +
-  "LINES TERMINATED BY '\\r\\n'\n" +
-  "IGNORE 1 LINES\n" +
-  "(idPrice, idPrinter, priDate, priValue);";
+let sqlQueries = [];
+
+let sqlQueryConstructors = `LOAD DATA
+  INFILE '` + csvPath + `/constructors.csv'
+  INTO TABLE t_constructors 
+  CHARACTER SET "utf8" 
+  COLUMNS TERMINATED BY ';' 
+  OPTIONALLY ENCLOSED BY '' 
+  LINES TERMINATED BY '\\r\\n' 
+  IGNORE 1 LINES 
+  (idConstructor, conName);`;
+   
+  let sqlQuerySuppliers = `LOAD DATA 
+  INFILE '` + csvPath + `/suppliers.csv' 
+  INTO TABLE t_supplier 
+  CHARACTER SET "utf8" 
+  COLUMNS TERMINATED BY ';' 
+  OPTIONALLY ENCLOSED BY '' 
+  LINES TERMINATED BY '\\r\\n' 
+  IGNORE 1 LINES 
+  (idSupplier, supName);`;
+   
+  let sqlQueryConsumables = `LOAD DATA 
+  INFILE '` + csvPath + `/consumables.csv' 
+  INTO TABLE t_consumables 
+  CHARACTER SET "utf8" 
+  COLUMNS TERMINATED BY ';' 
+  OPTIONALLY ENCLOSED BY '' 
+  LINES TERMINATED BY '\\r\\n' 
+  IGNORE 1 LINES 
+  (idConsumable, csbName, csbDescription, csbPrice);`;
+   
+  let sqlQueryBrands = `LOAD DATA 
+  INFILE '` + csvPath + `/brands.csv' 
+  INTO TABLE t_brands 
+  CHARACTER SET "utf8" 
+  COLUMNS TERMINATED BY ';' 
+  OPTIONALLY ENCLOSED BY '' 
+  LINES TERMINATED BY '\\r\\n' 
+  IGNORE 1 LINES 
+  (idBrands, braName, idConstructor);`;
+
+  let sqlQueryPrinters = `LOAD DATA 
+  INFILE '` + csvPath + `/printers.csv' 
+  INTO TABLE t_printers 
+  CHARACTER SET "utf8" 
+  COLUMNS TERMINATED BY ';' 
+  OPTIONALLY ENCLOSED BY '' 
+  LINES TERMINATED BY '\\r\\n' 
+  IGNORE 1 LINES 
+  (idPrinter, priName, priWidth, priHeight, priLength, priWeight, priPrintSpeed, priScanRes, priSales, idBrands, idSupplier, idConsumable);`;
+   
+  let sqlQueryPrices = `LOAD DATA 
+  INFILE '` + csvPath + `/prices.csv' 
+  INTO TABLE t_prices 
+  CHARACTER SET "utf8" 
+  COLUMNS TERMINATED BY ';' 
+  OPTIONALLY ENCLOSED BY '' 
+  LINES TERMINATED BY '\\r\\n' 
+  IGNORE 1 LINES 
+  (idPrice, idPrinter, priDate, priValue);`;
+
+  
+  sqlQueries.push(sqlQueryConstructors);
+  sqlQueries.push(sqlQuerySuppliers);
+  sqlQueries.push(sqlQueryConsumables);
+  sqlQueries.push(sqlQueryBrands);
+  sqlQueries.push(sqlQueryPrinters);
+  sqlQueries.push(sqlQueryPrices);
 
 // Get the mysql service
 let mysql = require('mysql');
@@ -86,15 +97,16 @@ connection.connect(function(err) {
   }
 });
 
-connection.query(sqlQuery, function(err, rows, fields) {
-  if(err){
-    console.log("An error occurred performing the query.");
-    console.log(err);
-    return;
-  }
-
-  console.log("Query successfully executed: ", rows);
-});
+for (const query of sqlQueries) {
+  connection.query(query, function(err, rows, fields) {
+    if(err){
+      console.log('An error occurred performing the query.');
+      return;
+    }
+  
+    console.log('Query successfully executed: ', rows);
+  });
+}
 
 // Close the connection
 connection.end(function(){
