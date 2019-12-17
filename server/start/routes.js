@@ -16,8 +16,11 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.get('/', 'PrinterController.test') // test route
+Route.get('/', async () => {
+    return 'Api du projet VJLF-306'
+})
 
+Route.get('/test', 'PrinterController.test') // test route
 Route.post('/filters', 'PrinterController.filters') // 1
 Route.get('/printers/:id', 'PrinterController.show') // 3, 10
 Route.get('/consumables', 'ConsumableController.index') // 11
